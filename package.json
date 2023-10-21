@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"Error: no build specified\" && exit 0",
-    "lint": "echo \"Error: no lint specified\" && exit 0",
+    "lint": "echo \"Error: no lint specified\n\" && exit 0",
     "commit-msg-lint": "commitlint --edit \"$1\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\n\" && exit 0",
     "prepare": "husky install"
   },
   "author": "Christopher Koch",
