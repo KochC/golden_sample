@@ -41,14 +41,12 @@ jobs:
 #    - name: Build
 #      run: npm run build
 
-    - name: Create Release
+    - name: Release Package
       if: ${{ env.newVersion }} != '0'
-      uses: ncipollo/release-action@v1.12.0
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        allowUpdates: true
-        tag: ${{ steps.semver.outputs.next }}
-        draft: true
-        makeLatest: true
-        name: Release ${{ steps.semver.outputs.next }}
-        body: Changelog Contents
-        token: ${{ github.token }}
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: ${{ steps.semver.outputs.next }}
+        prerelease: true
+        title: "Release ${{ steps.semver.outputs.next }}"
+        files: README.md
