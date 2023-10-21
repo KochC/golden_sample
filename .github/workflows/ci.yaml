@@ -51,8 +51,13 @@ jobs:
       with:
         allowUpdates: true
         tag: ${{ steps.semver.outputs.next }}
-        draft: true
+        draft: false
         makeLatest: true
         name: Release ${{ steps.semver.outputs.next }}
         body: Changelog Contents
         token: ${{ github.token }}
+
+    - name: Update tag version
+      run: |
+        git tag ${{ steps.semver.outputs.next }}
+        git push origin ${{ steps.semver.outputs.next }}
