@@ -51,10 +51,10 @@ jobs:
       env:
         BEFORE_REF: ${{ steps.semver.outputs.current }}
       run: |
-        echo commitLog=$(git log --pretty=format:%s "$BEFORE_REF..HEAD") >> $GITHUB_ENV
+        echo commitLog=$(git log "$BEFORE_REF..HEAD") >> $GITHUB_ENV
 
     - name: Create Release
-      if: ${{ env.newVersion }} == '1'
+      if: env.newVersion == '1'
       uses: ncipollo/release-action@v1.12.0
       with:
         allowUpdates: true
@@ -66,7 +66,7 @@ jobs:
         token: ${{ github.token }}
 
     - name: Update tag version
-      if: ${{ env.newVersion }} == '1'
+      if: env.newVersion == '1'
       run: |
         git tag ${{ steps.semver.outputs.next }}
         git push origin ${{ steps.semver.outputs.next }}
