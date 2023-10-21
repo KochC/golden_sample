@@ -53,10 +53,6 @@ jobs:
       run: |
         echo commitLog=$(git log --reverse --pretty=reference "$BEFORE_REF..HEAD") >> $GITHUB_ENV
 
-    - name: Print changelog
-      run: |
-        echo ${{ env.commitLog }}
-
     - name: Create Release
       if: env.newVersion == '1'
       uses: ncipollo/release-action@v1.12.0
