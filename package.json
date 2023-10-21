@@ -6,6 +6,7 @@
   "scripts": {
     "build": "echo \"Error: no build specified\" && exit 0",
     "lint": "echo \"Error: no lint specified\" && exit 0",
+    "commit-msg-lint": "commitlint --edit \"$1\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
