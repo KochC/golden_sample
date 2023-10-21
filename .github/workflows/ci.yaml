@@ -45,6 +45,12 @@ jobs:
 #    - name: Build
 #      run: npm run build
 
+    - name: log newly committed messages
+      env:
+        BEFORE_REF: ${{ github.event.before }}
+        AFTER_REF: ${{ github.event.after }}
+      run: git log --pretty=format:%s "$BEFORE_REF...$AFTER_REF"
+
     - name: Create Release
       if: ${{ env.newVersion }} != '0'
       uses: ncipollo/release-action@v1.12.0
