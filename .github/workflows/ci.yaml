@@ -37,7 +37,7 @@ jobs:
       id: check_versions
       run: |
         echo "versions_equal=$(test '${{ steps.semver.outputs.next }}' == '${{ steps.semver.outputs.current }}'; echo $?)"
-        echo "::set-env name=versions_equal::$(cat versions_equal)"
+        echo "versions_equal=$(cat versions_equal)" >> $GITHUB_ENV
 
     - name: Build
       run: npm run build
