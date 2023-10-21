@@ -62,7 +62,7 @@ jobs:
         draft: false
         makeLatest: true
         name: Release ${{ steps.semver.outputs.next }}
-        body: ${{ env.commitLog }}
+        body: Changelog:\n${{ env.commitLog }}
         token: ${{ github.token }}
 
     - name: Update tag version
