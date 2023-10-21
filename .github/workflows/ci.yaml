@@ -51,7 +51,8 @@ jobs:
       env:
         BEFORE_REF: ${{ github.event.before }}
         AFTER_REF: ${{ github.event.after }}
-      run: git log --pretty=format:%s "$BEFORE_REF...$AFTER_REF"
+      run: |
+        echo commitLog=$(git log --pretty=format:%s "$BEFORE_REF...$AFTER_REF") >> $GITHUB_ENV
 
     - name: Create Release
       if: ${{ env.newVersion }} != '0'
@@ -62,10 +63,11 @@ jobs:
         draft: false
         makeLatest: true
         name: Release ${{ steps.semver.outputs.next }}
-        body: Changelog Contents
+        body: ${{ env.commitLog }}
         token: ${{ github.token }}
 
     - name: Update tag version
+      if: ${{ env.newVersion }} != '0'
       run: |
         git tag ${{ steps.semver.outputs.next }}
         git push origin ${{ steps.semver.outputs.next }}
