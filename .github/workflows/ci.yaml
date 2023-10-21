@@ -35,13 +35,15 @@ jobs:
 
     - name: Check if Versions are Equal
       id: check_versions
-      run: echo "::set-output name=versions_equal::${{ steps.semver.outputs.next == steps.semver.outputs.current }}"
+      run: |
+        echo "versions_equal=$(test '${{ steps.semver.outputs.next }}' == '${{ steps.semver.outputs.current }}'; echo $?)"
+        echo "::set-env name=versions_equal::$(cat versions_equal)"
 
     - name: Build
       run: npm run build
 
     - name: Create Release
-      if: steps.check_versions.outputs.versions_equal == 'false'
+      if: env.versions_equal == '1' # '1' means versions are not equal
       uses: ncipollo/release-action@v1.12.0
       with:
         allowUpdates: true
