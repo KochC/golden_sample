@@ -9,9 +9,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
-  "author": "",
+  "author": "Christopher Koch",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
     "husky": "^8.0.0"
   }
 }
