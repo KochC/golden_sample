@@ -34,17 +34,14 @@ jobs:
         noVersionBumpBehavior: current
 
     - name: Check if Versions are Equal
-      run: |
-        if [[ "${{ steps.semver.outputs.next }}" == "${{ steps.semver.outputs.current }}" ]]; then
-          echo "Versions are equal. Add your action here."
-        else
-          echo "Versions are not equal."
-        fi
+      id: check_versions
+      run: echo "::set-output name=versions_equal::${{ steps.semver.outputs.next == steps.semver.outputs.current }}"
 
     - name: Build
       run: npm run build
 
     - name: Create Release
+      if: steps.check_versions.outputs.versions_equal == 'false'
       uses: ncipollo/release-action@v1.12.0
       with:
         allowUpdates: true
