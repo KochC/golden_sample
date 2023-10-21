@@ -51,7 +51,7 @@ jobs:
       env:
         BEFORE_REF: ${{ steps.semver.outputs.current }}
       run: |
-        echo commitLog=$(git log --reverse --pretty=reference "$BEFORE_REF..HEAD") >> $GITHUB_ENV
+        echo commitLog=$(git log --reverse --pretty=format:'%H : %s %n' "$BEFORE_REF..HEAD") >> $GITHUB_ENV
 
     - name: Create Release
       if: env.newVersion == '1'
