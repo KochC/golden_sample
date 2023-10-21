@@ -39,8 +39,8 @@ jobs:
         echo "versions_equal=$(test '${{ steps.semver.outputs.next }}' == '${{ steps.semver.outputs.current }}'; echo $?)"
         echo "versions_equal=$(cat versions_equal)" >> $GITHUB_ENV
 
-    - name: Build
-      run: npm run build
+#    - name: Build
+#      run: npm run build
 
     - name: Create Release
       if: env.versions_equal == '1' # '1' means versions are not equal
