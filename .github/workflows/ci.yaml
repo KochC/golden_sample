@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  id-token: write
 
 jobs:
   build:
@@ -31,6 +30,8 @@ jobs:
     - name: Run tests
       run: npm test
 
+    # Checks the latest tag version and all commits since then
+    # If there is a patch or minor commit included, it will bump accordingly
     - name: Get Next Version
       id: semver
       uses: ietf-tools/semver-action@v1
@@ -39,21 +40,25 @@ jobs:
         branch: main
         noVersionBumpBehavior: current
 
+    # Checks if the current version is the same as the next version
     - name: Check if Versions are Equal
       id: check_versions
       run: |
         echo newVersion=$(test '${{ steps.semver.outputs.next }}' == '${{ steps.semver.outputs.current }}'; echo $?) >> $GITHUB_ENV
 
-    - name: Update package.js
+    # Updates package.json to be used in case you build a node module
+    - name: Update package.json
       if: env.newVersion == '1'
       run: |
         npm version ${{ steps.semver.outputs.nextStrict }} --no-git-tag-version
 
+    # Will push all commits since the last release into the CHANGELOG.md file
     - name: Create changelog.md
       if: env.newVersion == '1'
       run: |
         npm run changelog
 
+    # Publish new release
     - name: Publish Release
       if: env.newVersion == '1'
       uses: ncipollo/release-action@v1.12.0
@@ -67,6 +72,7 @@ jobs:
         token: ${{ github.token }}
         artifacts: "dummy.bin"
 
+    # Update latest git tag to allow proper versioning
     - name: Update tag version
       if: env.newVersion == '1'
       run: |

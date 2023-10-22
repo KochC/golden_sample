@@ -1,6 +1,6 @@
 {
   "name": "golden_sample",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "commit-msg-lint": "commitlint --edit \"$1\"",
     "test": "echo \"Error: no test specified\n\" && exit 0",
     "prepare": "husky install",
-    "changelog": "changelog-maker markdown > CHANGELOG.md"
+    "changelog": "changelog-maker markdown >> CHANGELOG.md"
   },
   "author": "Christopher Koch",
   "license": "ISC",
