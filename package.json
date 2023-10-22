@@ -1,19 +1,21 @@
 {
   "name": "golden_sample",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "lint": "echo \"Error: no lint specified\n\" && exit 0",
     "commit-msg-lint": "commitlint --edit \"$1\"",
     "test": "echo \"Error: no test specified\n\" && exit 0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "changelog": "changelog-maker markdown"
   },
   "author": "Christopher Koch",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^18.0.0",
     "@commitlint/config-conventional": "^18.0.0",
+    "changelog-maker": "^3.2.5",
     "husky": "^8.0.0"
   }
 }

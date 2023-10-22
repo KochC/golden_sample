@@ -44,16 +44,12 @@ jobs:
       run: |
         echo newVersion=$(test '${{ steps.semver.outputs.next }}' == '${{ steps.semver.outputs.current }}'; echo $?) >> $GITHUB_ENV
 
-#    - name: Build
-#      run: npm run build
-
-    - name: log newly committed messages
-      env:
-        BEFORE_REF: ${{ steps.semver.outputs.current }}
+    - name: Update package.js
+      if: env.newVersion == '1'
       run: |
-        echo commitLog=$(git log --reverse --pretty=format:'%H : %s %n' "$BEFORE_REF..HEAD") >> $GITHUB_ENV
+        npm version ${{ steps.semver.outputs.nextStrict }} --no-git-tag-version
 
-    - name: Create Release
+    - name: Publish Release
       if: env.newVersion == '1'
       uses: ncipollo/release-action@v1.12.0
       with:
@@ -62,7 +58,7 @@ jobs:
         draft: false
         makeLatest: true
         name: Release ${{ steps.semver.outputs.next }}
-        body: Changelog:\  ${{ env.commitLog }}
+        body: $(npm run changelog --silent)
         token: ${{ github.token }}
 
     - name: Update tag version
