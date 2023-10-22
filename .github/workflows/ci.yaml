@@ -52,7 +52,7 @@ jobs:
     - name: Create changelog.md
       if: env.newVersion == '1'
       run: |
-        echo changelog=$(npm run changelog) >> $GITHUB_ENV
+        npm run changelog
 
     - name: Publish Release
       if: env.newVersion == '1'
@@ -63,8 +63,9 @@ jobs:
         draft: false
         makeLatest: true
         name: Release ${{ steps.semver.outputs.next }}
-        body: ${{ env.changelog }}
+        bodyFile: "CHANGELOG.md"
         token: ${{ github.token }}
+        artifacts: "dummy.bin"
 
     - name: Update tag version
       if: env.newVersion == '1'
