@@ -49,6 +49,12 @@ jobs:
       run: |
         npm version ${{ steps.semver.outputs.nextStrict }} --no-git-tag-version
 
+    - name: Create changelog.md
+      if: env.newVersion == '1'
+      run: |
+        npm run changelog
+
+
     - name: Publish Release
       if: env.newVersion == '1'
       uses: ncipollo/release-action@v1.12.0
@@ -58,7 +64,7 @@ jobs:
         draft: false
         makeLatest: true
         name: Release ${{ steps.semver.outputs.next }}
-        body: $(npm run changelog --silent)
+        body: ${{ readFile('CHANGELOG.md') }}
         token: ${{ github.token }}
 
     - name: Update tag version

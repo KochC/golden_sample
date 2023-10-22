@@ -8,7 +8,7 @@
     "commit-msg-lint": "commitlint --edit \"$1\"",
     "test": "echo \"Error: no test specified\n\" && exit 0",
     "prepare": "husky install",
-    "changelog": "changelog-maker markdown"
+    "changelog": "changelog-maker markdown > CHANGELOG.md"
   },
   "author": "Christopher Koch",
   "license": "ISC",
